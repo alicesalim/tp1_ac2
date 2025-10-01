@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <iterator>
 using namespace std;
 
 /**
@@ -83,39 +82,49 @@ string DecToHex(string valor)
     return valor;
 }
 
-
 int main()
 {
-    // Arquivos de entrada e saída
-    string caminhoEntrada = "C:\\Users\\mathe\\Desktop\\Compilador\\dados\\testeula.ula";
-    string caminhoSaida = "C:\\Users\\mathe\\Desktop\\Compilador\\dados\\testeula.hex";
+    // Lê do arquivo .ula e escreve no arquivo .hex
+    string caminhoEntrada = "C:\\Users\\Marco Antonio\\Desktop\\EP04 - AC II\\EP04 - AC II\\dados\\testeula.ula";
+    string caminhoSaida = "C:\\Users\\Marco Antonio\\Desktop\\EP04 - AC II\\EP04 - AC II\\dados\\testeula.hex";
 
-     // Abre arquivo de entrada para leitura
+    // Abre arquivo de entrada (.ula) para leitura
     ifstream entrada(caminhoEntrada);
 
-     // Abre arquivo de saída para escrita
+    // Abre arquivo de saída (.hex) para escrita
     ofstream saida(caminhoSaida);
 
-    if (!entrada.is_open() || !saida.is_open())
+    if (!entrada.is_open())
     {
-        cerr << "Erro ao abrir arquivos!" << endl;
+        cerr << "Erro ao abrir arquivo de entrada: " << caminhoEntrada << endl;
         return 1;
     }
 
+    if (!saida.is_open())
+    {
+        cerr << "Erro ao abrir arquivo de saída: " << caminhoSaida << endl;
+        entrada.close();
+        return 1;
+    }
+
+    cout << "Arquivos abertos com sucesso!" << endl;
+    cout << "Lendo de: " << caminhoEntrada << endl;
+    cout << "Escrevendo em: " << caminhoSaida << endl;
+
     string linha, X = "", Y = "", W = "";
 
-    // Lê o arquivo linha por linha
+    // Lê o arquivo .ula linha por linha
     while (getline(entrada, linha))
     {
         // Se encontrar "fim.", interrompe
-        if ((int)linha.find("fim.") >= 0) break;
+        if (linha.find("fim.") != string::npos) break;
 
         // Ignora "inicio"
-        if ((int)linha.find("inicio") >= 0) continue;
+        if (linha.find("inicio") != string::npos) continue;
 
         // Remove ponto e vírgula
-        int posPonto = (int)linha.find(';');
-        if (posPonto >= 0)
+        size_t posPonto = linha.find(';');
+        if (posPonto != string::npos)
         {
             linha = linha.substr(0, posPonto);
         }
@@ -124,55 +133,62 @@ int main()
         while (!linha.empty() && linha.front() == ' ') linha.erase(linha.begin());
         while (!linha.empty() && linha.back() == ' ') linha.pop_back();
 
+        if (linha.empty()) continue;
+
         // Processa X
-        if (!linha.empty() && linha[0] == 'X')
+        if (linha[0] == 'X')
         {
-            int pos = (int)linha.find('=');
-            if (pos >= 0)
+            size_t pos = linha.find('=');
+            if (pos != string::npos)
             {
                 X = linha.substr(pos + 1);
                 while (!X.empty() && X.front() == ' ') X.erase(X.begin());
+                cout << "X encontrado: " << X << endl;
             }
         }
 
         // Processa Y
-        else if (!linha.empty() && linha[0] == 'Y')
+        else if (linha[0] == 'Y')
         {
-            int pos = (int)linha.find('=');
-            if (pos >= 0)
+            size_t pos = linha.find('=');
+            if (pos != string::npos)
             {
                 Y = linha.substr(pos + 1);
                 while (!Y.empty() && Y.front() == ' ') Y.erase(Y.begin());
+                cout << "Y encontrado: " << Y << endl;
             }
         }
 
         // Processa W
-        else if (!linha.empty() && linha[0] == 'W')
+        else if (linha[0] == 'W')
         {
-            int pos = (int)linha.find('=');
-            if (pos >= 0)
+            size_t pos = linha.find('=');
+            if (pos != string::npos)
             {
                 W = linha.substr(pos + 1);
                 while (!W.empty() && W.front() == ' ') W.erase(W.begin());
 
                 // Converte W para hexadecimal
                 string Whex = WtoHex(W);
+                cout << "W encontrado: " << W << " -> " << Whex << endl;
 
                 // Converte X e Y para hexadecimal se >= 10
-                X = DecToHex(X);
-                Y = DecToHex(Y);
+                string Xhex = DecToHex(X);
+                string Yhex = DecToHex(Y);
 
                 // Monta a instrução final
-                string resultado = X + Y + Whex;
+                string resultado = Xhex + Yhex + Whex;
 
                 // Escreve no arquivo .hex
                 saida << resultado << endl;
+                cout << "Resultado escrito no .hex: " << resultado << endl;
             }
         }
     }
 
     entrada.close();
     saida.close();
+    cout << "Processamento concluído! Arquivo .hex gerado com sucesso!" << endl;
 
     return 0;
 }
