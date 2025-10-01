@@ -107,9 +107,9 @@ int main()
         return 1;
     }
 
-    cout << "Arquivos abertos com sucesso!" << endl;
-    cout << "Lendo de: " << caminhoEntrada << endl;
-    cout << "Escrevendo em: " << caminhoSaida << endl;
+    //cout << "Arquivos abertos com sucesso!" << endl;
+    //cout << "Lendo de: " << caminhoEntrada << endl;
+    //cout << "Escrevendo em: " << caminhoSaida << endl;
 
     string linha, X = "", Y = "", W = "";
 
@@ -143,7 +143,7 @@ int main()
             {
                 X = linha.substr(pos + 1);
                 while (!X.empty() && X.front() == ' ') X.erase(X.begin());
-                cout << "X encontrado: " << X << endl;
+                //cout << "X encontrado: " << X << endl;
             }
         }
 
@@ -155,7 +155,7 @@ int main()
             {
                 Y = linha.substr(pos + 1);
                 while (!Y.empty() && Y.front() == ' ') Y.erase(Y.begin());
-                cout << "Y encontrado: " << Y << endl;
+                //cout << "Y encontrado: " << Y << endl;
             }
         }
 
@@ -170,7 +170,7 @@ int main()
 
                 // Converte W para hexadecimal
                 string Whex = WtoHex(W);
-                cout << "W encontrado: " << W << " -> " << Whex << endl;
+                //cout << "W encontrado: " << W << " -> " << Whex << endl;
 
                 // Converte X e Y para hexadecimal se >= 10
                 string Xhex = DecToHex(X);
@@ -181,14 +181,14 @@ int main()
 
                 // Escreve no arquivo .hex
                 saida << resultado << endl;
-                cout << "Resultado escrito no .hex: " << resultado << endl;
+                //cout << "Resultado escrito no .hex: " << resultado << endl;
             }
         }
     }
 
     entrada.close();
     saida.close();
-    cout << "Processamento concluído! Arquivo .hex gerado com sucesso!" << endl;
+    cout << "Processamento concluido! Arquivo .hex gerado com sucesso!" << endl;
 
     return 0;
 }
