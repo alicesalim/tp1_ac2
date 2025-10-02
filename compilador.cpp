@@ -85,8 +85,8 @@ string DecToHex(string valor)
 int main()
 {
     // Lê do arquivo .ula e escreve no arquivo .hex
-    string caminhoEntrada = "C:\\Users\\Marco Antonio\\Desktop\\EP04 - AC II\\EP04 - AC II\\dados\\testeula.ula";
-    string caminhoSaida = "C:\\Users\\Marco Antonio\\Desktop\\EP04 - AC II\\EP04 - AC II\\dados\\testeula.hex";
+    string caminhoEntrada = "\\dados\\testeula.ula";
+    string caminhoSaida   = "\\dados\\testeula.hex";
 
     // Abre arquivo de entrada (.ula) para leitura
     ifstream entrada(caminhoEntrada);
@@ -188,7 +188,7 @@ int main()
 
     entrada.close();
     saida.close();
-    cout << "Processamento concluido! Arquivo .hex gerado com sucesso!" << endl;
+    cout << "Processamento concluido! Arquivo .hex gerado com sucesso." << endl;
 
     return 0;
 }
