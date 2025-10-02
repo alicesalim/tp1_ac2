@@ -85,8 +85,8 @@ string DecToHex(string valor)
 int main()
 {
     // Lê do arquivo .ula e escreve no arquivo .hex
-    string caminhoEntrada = "\\dados\\testeula.ula";
-    string caminhoSaida   = "\\dados\\testeula.hex";
+    string caminhoEntrada = "C:\\Users\\1472494\\Desktop\\tp1_ac2\\dados\\testeula.ula";
+    string caminhoSaida   = "C:\\Users\\1472494\\Desktop\\tp1_ac2\\dados\\testeula.hex";
 
     // Abre arquivo de entrada (.ula) para leitura
     ifstream entrada(caminhoEntrada);

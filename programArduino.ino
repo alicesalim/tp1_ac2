@@ -1,25 +1,35 @@
 // ---------------------------
 // Configurações do Arduino
 // ---------------------------
-const int ledPins[4] = {13, 12, 11, 10}; // MSB -> LSB: F3 F2 F1 F0
+// Define os pinos digitais conectados aos LEDs.
+// Cada LED representa uma saída da ULA (MSB -> LSB: F3, F2, F1, F0).
+const int ledPins[4] = {13, 12, 11, 10}; // Ordem fixa: LED mais à esquerda = bit mais significativo (F3) // MSB -> LSB: F3 F2 F1 F0
 
 // ---------------------------
 // UI / execução
 // ---------------------------
+// Variáveis para interface e controle de execução.
+// SETA: caractere usado para indicar a instrução atual.
+// VERBOSE: controla impressão detalhada no Serial Monitor.
+// PRINT_DELAY_MS: tempo de espera (ms) entre execuções para visualização.
 const char* SETA = "v";
 bool  VERBOSE = false;                 // false = não imprime “Executando/Resultado”
-unsigned int PRINT_DELAY_MS = 2000;    // tempo de espera após cada instrução
+unsigned int PRINT_DELAY_MS = 2000; // Tempo de espera (ms) entre prints das instruções    // tempo de espera após cada instrução
 
 // ---------------------------
 // Memória e registradores
 // ---------------------------
+// Simula a memória principal da CPU.
+// Layout: [0]=PC (contador de programa), [1]=W (acumulador), [2]=X, [3]=Y.
+// Programa começa no índice 4 (INICIO).
+// Demais posições armazenam instruções em formato hexadecimal.
 // Layout: [0]=PC, [1]=W, [2]=X, [3]=Y, programa inicia em 4
-byte memoria[196] = {0};
+byte memoria[196] = {0}; // Vetor que representa toda a memória simulada (196 bytes)
 
-#define PC memoria[0]
-#define W  memoria[1]
-#define X  memoria[2]
-#define Y  memoria[3]
+#define PC memoria[0] // Contador de programa (aponta para próxima instrução)
+#define W  memoria[1] // Acumulador principal (resultado das operações)
+#define X  memoria[2] // Registrador auxiliar X
+#define Y  memoria[3] // Registrador auxiliar Y
 
 const int INICIO      = 4;
 const int MEM_BYTES   = sizeof(memoria) / sizeof(memoria[0]); // 196
